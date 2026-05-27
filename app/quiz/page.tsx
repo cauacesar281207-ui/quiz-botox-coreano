@@ -1125,7 +1125,7 @@ function VSLStep({ step }: { step: number }) {
     if (step !== 11) return;
     const s = document.createElement("script");
     s.src =
-      "https://scripts.converteai.net/9e5423e3-0f94-43d6-8352-206772c5af81/players/6a172481f240eb673852c9ee/v4/player.js";
+      "https://scripts.converteai.net/9e5423e3-0f94-43d6-8352-206772c5af81/players/6a173bf2be176651058cebdf/v4/player.js";
     s.async = true;
     document.head.appendChild(s);
     return () => {
@@ -1160,7 +1160,7 @@ function VSLStep({ step }: { step: number }) {
 
       <div style={{ width: "100%", maxWidth: 400, margin: "0 auto" }}>
         <vturb-smartplayer
-          id="vid-6a172481f240eb673852c9ee"
+          id="vid-6a173bf2be176651058cebdf"
           style={{
             display: "block",
             margin: "0 auto",
