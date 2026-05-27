@@ -72,12 +72,12 @@ function Stars({ count }: { count: number }) {
   );
 }
 
-function Logo({ height = 72 }: { height?: number }) {
+function Logo({ height = 88, marginBottom }: { height?: number; marginBottom?: string }) {
   return (
     <img
       src={`${BASE_URL}botoxdesu.jfif`}
       alt="Botox Coreano"
-      style={{ height, display: "block", margin: "0 auto" }}
+      style={{ height, width: "auto", display: "block", margin: "0 auto", ...(marginBottom ? { marginBottom } : {}) }}
     />
   );
 }
@@ -463,21 +463,48 @@ function BeforeAfterSlider() {
 function AnimatedChart() {
   const goldPathRef = useRef<SVGPathElement>(null);
   const purplePathRef = useRef<SVGPathElement>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const animate = (el: SVGPathElement | null, delay: number) => {
-      if (!el) return;
-      const len = el.getTotalLength();
-      el.style.strokeDasharray = `${len}`;
-      el.style.strokeDashoffset = `${len}`;
-      el.style.transition = `stroke-dashoffset 1.5s ease-out ${delay}s`;
-      requestAnimationFrame(() => {
-        el.style.strokeDashoffset = "0";
-      });
-    };
-    animate(goldPathRef.current, 0);
-    animate(purplePathRef.current, 0.3);
+    const t = setTimeout(() => setReady(true), 150);
+    return () => clearTimeout(t);
   }, []);
+
+  useEffect(() => {
+    if (!ready) return;
+    const p1 = goldPathRef.current;
+    const p2 = purplePathRef.current;
+    if (!p1 || !p2) return;
+
+    const len1 = p1.getTotalLength();
+    const len2 = p2.getTotalLength();
+    p1.style.strokeDasharray = String(len1);
+    p1.style.strokeDashoffset = String(len1);
+    p2.style.strokeDasharray = String(len2);
+    p2.style.strokeDashoffset = String(len2);
+
+    p1.getBoundingClientRect();
+
+    setTimeout(() => {
+      p1.style.transition = "stroke-dashoffset 1.8s ease-out";
+      p1.style.strokeDashoffset = "0";
+      p2.style.transition = "stroke-dashoffset 1.8s ease-out 0.3s";
+      p2.style.strokeDashoffset = "0";
+    }, 100);
+  }, [ready]);
+
+  const goldDots = [
+    { cx: 40, cy: 130, delay: "0.4s" },
+    { cx: 120, cy: 100, delay: "0.8s" },
+    { cx: 200, cy: 60, delay: "1.2s" },
+    { cx: 280, cy: 20, delay: "1.6s" },
+  ];
+  const purpleDots = [
+    { cx: 40, cy: 130, delay: "0.4s" },
+    { cx: 120, cy: 126, delay: "0.8s" },
+    { cx: 200, cy: 122, delay: "1.2s" },
+    { cx: 280, cy: 118, delay: "1.6s" },
+  ];
 
   return (
     <div
@@ -486,6 +513,10 @@ function AnimatedChart() {
         border: "1px solid rgba(0,0,0,0.08)",
         borderRadius: 16,
         padding: "1.5rem",
+        boxShadow: ready
+          ? "0 0 40px rgba(240, 195, 142, 0.25), 0 4px 20px rgba(0,0,0,0.05)"
+          : "none",
+        transition: "box-shadow 1s ease-out 0.5s",
       }}
     >
       <p
@@ -507,6 +538,10 @@ function AnimatedChart() {
         <path
           d="M40,130 C80,120 120,100 160,80 C200,60 240,35 280,20 L280,140 L40,140 Z"
           fill="rgba(240,195,142,0.3)"
+          style={{
+            opacity: ready ? 1 : 0,
+            transition: "opacity 1s ease-out 0.5s",
+          }}
         />
         <path
           ref={goldPathRef}
@@ -515,10 +550,20 @@ function AnimatedChart() {
           stroke="#d89f55"
           strokeWidth="3"
         />
-        <circle cx="40" cy="130" r="5" fill="#d89f55" />
-        <circle cx="120" cy="100" r="5" fill="#d89f55" />
-        <circle cx="200" cy="60" r="5" fill="#d89f55" />
-        <circle cx="280" cy="20" r="5" fill="#d89f55" />
+        {goldDots.map((dot) => (
+          <circle
+            key={`g-${dot.cx}`}
+            cx={dot.cx}
+            cy={dot.cy}
+            r="5"
+            fill="#d89f55"
+            style={{
+              transform: ready ? "scale(1)" : "scale(0)",
+              transition: `transform 0.3s ease ${dot.delay}`,
+              transformOrigin: `${dot.cx}px ${dot.cy}px`,
+            }}
+          />
+        ))}
 
         <path
           ref={purplePathRef}
@@ -528,10 +573,20 @@ function AnimatedChart() {
           strokeWidth="2"
           strokeDasharray="4 2"
         />
-        <circle cx="40" cy="130" r="4" fill="#7c6bd4" />
-        <circle cx="120" cy="126" r="4" fill="#7c6bd4" />
-        <circle cx="200" cy="122" r="4" fill="#7c6bd4" />
-        <circle cx="280" cy="118" r="4" fill="#7c6bd4" />
+        {purpleDots.map((dot) => (
+          <circle
+            key={`p-${dot.cx}`}
+            cx={dot.cx}
+            cy={dot.cy}
+            r="4"
+            fill="#7c6bd4"
+            style={{
+              transform: ready ? "scale(1)" : "scale(0)",
+              transition: `transform 0.3s ease ${dot.delay}`,
+              transformOrigin: `${dot.cx}px ${dot.cy}px`,
+            }}
+          />
+        ))}
 
         <text x="40" y="155" textAnchor="middle" fontSize="10" fill="#6c757d">S1</text>
         <text x="120" y="155" textAnchor="middle" fontSize="10" fill="#6c757d">S2</text>
@@ -868,7 +923,7 @@ function ResultStep({
     <div>
       <div style={{ position: "relative", paddingTop: "0.5rem", marginBottom: "1rem" }}>
         <BackButton onClick={goBack} />
-        <Logo height={64} />
+        <Logo height={80} />
       </div>
 
       <div style={{ animation: "fadeSlideIn 0.35s ease-out 0s both" }}>
@@ -1080,10 +1135,6 @@ function VSLStep({ step }: { step: number }) {
 
   return (
     <div>
-      <div style={{ marginBottom: "1.5rem" }}>
-        <Logo height={64} />
-      </div>
-
       <h2
         style={{
           fontSize: "1.4rem",
@@ -1174,7 +1225,7 @@ export default function QuizPage() {
         {/* STEP 0: INTRO */}
         {step === 0 && (
           <div>
-            <Logo height={100} />
+            <Logo height={120} marginBottom="1.5rem" />
             <div style={{ marginTop: "1rem" }}>
               <ProgressBar percent={100} />
             </div>
@@ -1221,7 +1272,7 @@ export default function QuizPage() {
           <div>
             <div style={headerStyle}>
               <BackButton onClick={goBack} />
-              <Logo height={72} />
+              <Logo height={88} />
             </div>
             <ProgressBar percent={progressPercent} />
             <h2
@@ -1278,7 +1329,7 @@ export default function QuizPage() {
           <div>
             <div style={headerStyle}>
               <BackButton onClick={goBack} />
-              <Logo height={72} />
+              <Logo height={88} />
             </div>
             <ProgressBar percent={progressPercent} />
             <h2
@@ -1327,7 +1378,7 @@ export default function QuizPage() {
           <div>
             <div style={headerStyle}>
               <BackButton onClick={goBack} />
-              <Logo height={72} />
+              <Logo height={88} />
             </div>
             <ProgressBar percent={progressPercent} />
             <h2
@@ -1376,7 +1427,7 @@ export default function QuizPage() {
           <div>
             <div style={headerStyle}>
               <BackButton onClick={goBack} />
-              <Logo height={72} />
+              <Logo height={88} />
             </div>
             <ProgressBar percent={progressPercent} />
             <h2
@@ -1436,7 +1487,7 @@ export default function QuizPage() {
           <div>
             <div style={headerStyle}>
               <BackButton onClick={goBack} />
-              <Logo height={72} />
+              <Logo height={88} />
             </div>
             <ProgressBar percent={progressPercent} />
             <h2
@@ -1483,7 +1534,7 @@ export default function QuizPage() {
           <div>
             <div style={headerStyle}>
               <BackButton onClick={goBack} />
-              <Logo height={72} />
+              <Logo height={88} />
             </div>
             <ProgressBar percent={progressPercent} />
             <h2
@@ -1531,7 +1582,7 @@ export default function QuizPage() {
           <div>
             <div style={headerStyle}>
               <BackButton onClick={goBack} />
-              <Logo height={72} />
+              <Logo height={88} />
             </div>
             <ProgressBar percent={progressPercent} />
             <h2
@@ -1577,7 +1628,7 @@ export default function QuizPage() {
           <div>
             <div style={headerStyle}>
               <BackButton onClick={goBack} />
-              <Logo height={72} />
+              <Logo height={88} />
             </div>
             <ProgressBar percent={progressPercent} />
             <h2
@@ -1618,7 +1669,7 @@ export default function QuizPage() {
           <div>
             <div style={headerStyle}>
               <BackButton onClick={goBack} />
-              <Logo height={64} />
+              <Logo height={80} />
             </div>
             <ProgressBar percent={90} />
             <LoadingStep onComplete={() => setStep(10)} />
