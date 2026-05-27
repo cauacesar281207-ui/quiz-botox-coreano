@@ -1,0 +1,1491 @@
+"use client";
+
+import { useState, useRef, useEffect, useCallback } from "react";
+
+const BASE_URL = "https://thenaturalprotocol.online/Botox-Coreano/assets/";
+
+const GOLD_GRADIENT = "linear-gradient(135deg, #f0c38e, #d89f55, #f5d7b0)";
+
+const testimonials = [
+  {
+    name: "Fátima, 52 anos",
+    verified: false,
+    stars: 5,
+    text: '"Eu não acreditava que algo tão simples pudesse mudar tanto minha pele. Em 2 semanas, meu rosto já estava mais firme e iluminado. Me sinto 10 anos mais jovem!"',
+  },
+  {
+    name: "Sônia, 58 anos",
+    verified: true,
+    stars: 5,
+    text: '"Minhas amigas não param de perguntar o que eu fiz. O botox coreano manual devolveu a firmeza que eu achava que tinha perdido pra sempre."',
+  },
+  {
+    name: "Márcia, 48 anos",
+    verified: false,
+    stars: 5,
+    text: '"Sempre tive medo de procedimentos invasivos. Esse método é natural, fácil e os resultados são reais. Minha autoestima voltou!"',
+  },
+  {
+    name: "Silvana, 55 anos",
+    verified: false,
+    stars: 5,
+    text: '"Dedico apenas 5 minutinhos por dia e já noto diferença enorme nas linhas de expressão. Recomendo de olhos fechados!"',
+  },
+  {
+    name: "Renata, 42 anos",
+    verified: false,
+    stars: 5,
+    text: '"Comecei por curiosidade e agora não largo mais. Minha pele está mais firme e com muito mais vida. Melhor investimento que fiz!"',
+  },
+];
+
+function Stars({ count }: { count: number }) {
+  return (
+    <span style={{ color: "#f5a623", fontSize: "1rem" }}>
+      {"⭐".repeat(count)}
+    </span>
+  );
+}
+
+function Logo({ height = 56 }: { height?: number }) {
+  return (
+    <img
+      src={`${BASE_URL}botoxdesu.jfif`}
+      alt="Botox Coreano"
+      style={{ height, display: "block", margin: "0 auto" }}
+    />
+  );
+}
+
+function ProgressBar({ percent }: { percent: number }) {
+  return (
+    <div
+      style={{
+        height: 4,
+        background: "rgba(0,0,0,0.08)",
+        borderRadius: 2,
+        marginBottom: "2rem",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          height: "100%",
+          width: `${percent}%`,
+          background: GOLD_GRADIENT,
+          borderRadius: 2,
+          transition: "width 0.4s ease",
+        }}
+      />
+    </div>
+  );
+}
+
+function BackButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        position: "absolute",
+        top: "1.5rem",
+        left: "1.5rem",
+        width: 36,
+        height: 36,
+        borderRadius: "50%",
+        background: "rgba(0,0,0,0.03)",
+        border: "1px solid rgba(0,0,0,0.08)",
+        fontSize: "1.1rem",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "#1a1a1a",
+        zIndex: 10,
+      }}
+    >
+      ‹
+    </button>
+  );
+}
+
+function OptionBtn({
+  emoji,
+  label,
+  onClick,
+  compact = false,
+}: {
+  emoji?: string;
+  label: string;
+  onClick: () => void;
+  compact?: boolean;
+}) {
+  const [hover, setHover] = useState(false);
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        background: hover ? "rgba(240,195,142,0.1)" : "rgba(0,0,0,0.03)",
+        border: hover
+          ? "1px solid #d89f55"
+          : "1px solid rgba(0,0,0,0.08)",
+        borderRadius: 14,
+        padding: compact ? "0.75rem 1rem" : "1rem 1.25rem",
+        display: "flex",
+        alignItems: "center",
+        gap: "0.75rem",
+        fontSize: "1rem",
+        fontWeight: 500,
+        cursor: "pointer",
+        transition: "all 0.2s ease",
+        width: "100%",
+        textAlign: "left",
+        color: "#1a1a1a",
+        fontFamily: "Inter, sans-serif",
+      }}
+    >
+      {emoji && <span style={{ fontSize: "1.5rem" }}>{emoji}</span>}
+      <span>{label}</span>
+    </button>
+  );
+}
+
+function CTAButton({
+  label,
+  onClick,
+}: {
+  label: string;
+  onClick: () => void;
+}) {
+  const [hover, setHover] = useState(false);
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        background: GOLD_GRADIENT,
+        color: "#1a1a1a",
+        fontWeight: 700,
+        fontSize: "1.1rem",
+        borderRadius: 50,
+        padding: "1rem 2rem",
+        width: "100%",
+        border: "none",
+        cursor: "pointer",
+        boxShadow: hover
+          ? "0 6px 25px rgba(216,159,85,0.4)"
+          : "0 4px 20px rgba(216,159,85,0.3)",
+        transition: "transform 0.2s ease, box-shadow 0.2s ease",
+        transform: hover ? "translateY(-2px)" : "none",
+        fontFamily: "Inter, sans-serif",
+      }}
+    >
+      {label}
+    </button>
+  );
+}
+
+function TestimonialCard({
+  name,
+  verified,
+  stars,
+  text,
+}: {
+  name: string;
+  verified: boolean;
+  stars: number;
+  text: string;
+}) {
+  return (
+    <div
+      style={{
+        background: "rgba(0,0,0,0.03)",
+        border: "1px solid rgba(0,0,0,0.08)",
+        borderRadius: 16,
+        padding: "1.25rem",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "0.5rem",
+        }}
+      >
+        <span style={{ fontWeight: 700, fontSize: "0.95rem", color: "#1a1a1a" }}>
+          {name}
+          {verified && (
+            <span
+              style={{
+                fontSize: "0.75rem",
+                color: "#27ae60",
+                marginLeft: "0.5rem",
+              }}
+            >
+              ✓ Verificada
+            </span>
+          )}
+        </span>
+        <Stars count={stars} />
+      </div>
+      <p
+        style={{
+          fontStyle: "italic",
+          fontSize: "0.9rem",
+          color: "#1a1a1a",
+          margin: 0,
+          lineHeight: 1.5,
+        }}
+      >
+        {text}
+      </p>
+    </div>
+  );
+}
+
+function BeforeAfterSlider() {
+  const [sliderPos, setSliderPos] = useState(50);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+
+  const updateSlider = useCallback((clientX: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const pct = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    setSliderPos(pct);
+  }, []);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      if (isDragging.current) updateSlider(e.clientX);
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (isDragging.current) updateSlider(e.touches[0].clientX);
+    };
+    const onUp = () => {
+      isDragging.current = false;
+    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    window.addEventListener("touchmove", onTouchMove);
+    window.addEventListener("touchend", onUp);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onUp);
+    };
+  }, [updateSlider]);
+
+  return (
+    <div
+      ref={containerRef}
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        borderRadius: 16,
+        maxHeight: 280,
+        cursor: "ew-resize",
+        userSelect: "none",
+        touchAction: "none",
+      }}
+      onMouseDown={(e) => {
+        isDragging.current = true;
+        updateSlider(e.clientX);
+      }}
+      onTouchStart={(e) => {
+        isDragging.current = true;
+        updateSlider(e.touches[0].clientX);
+      }}
+    >
+      <img
+        src={`${BASE_URL}after_final.png`}
+        alt="Depois"
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          display: "block",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          clipPath: `inset(0 ${100 - sliderPos}% 0 0)`,
+        }}
+      >
+        <img
+          src={`${BASE_URL}before_final.png`}
+          alt="Antes"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+          }}
+        />
+      </div>
+
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: `${sliderPos}%`,
+          transform: "translate(-50%, -50%)",
+          width: 44,
+          height: 44,
+          background: "white",
+          border: "3px solid #d89f55",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
+          zIndex: 5,
+          pointerEvents: "none",
+        }}
+      >
+        <span style={{ color: "#888", fontSize: "0.8rem" }}>◀▶</span>
+      </div>
+
+      <span
+        style={{
+          position: "absolute",
+          bottom: 12,
+          left: 12,
+          color: "#d89f55",
+          fontSize: "0.75rem",
+          fontWeight: 700,
+          letterSpacing: 1,
+        }}
+      >
+        ANTES
+      </span>
+      <span
+        style={{
+          position: "absolute",
+          bottom: 12,
+          right: 12,
+          color: "#d89f55",
+          fontSize: "0.75rem",
+          fontWeight: 700,
+          letterSpacing: 1,
+        }}
+      >
+        DEPOIS
+      </span>
+    </div>
+  );
+}
+
+function AnimatedChart() {
+  const goldPathRef = useRef<SVGPathElement>(null);
+  const purplePathRef = useRef<SVGPathElement>(null);
+
+  useEffect(() => {
+    const animate = (el: SVGPathElement | null, delay: number) => {
+      if (!el) return;
+      const len = el.getTotalLength();
+      el.style.strokeDasharray = `${len}`;
+      el.style.strokeDashoffset = `${len}`;
+      el.style.transition = `stroke-dashoffset 1.5s ease-out ${delay}s`;
+      requestAnimationFrame(() => {
+        el.style.strokeDashoffset = "0";
+      });
+    };
+    animate(goldPathRef.current, 0);
+    animate(purplePathRef.current, 0.3);
+  }, []);
+
+  return (
+    <div
+      style={{
+        background: "rgba(0,0,0,0.03)",
+        border: "1px solid rgba(0,0,0,0.08)",
+        borderRadius: 16,
+        padding: "1.5rem",
+      }}
+    >
+      <p
+        style={{
+          fontWeight: 600,
+          textAlign: "center",
+          color: "#1a1a1a",
+          marginTop: 0,
+          marginBottom: "1rem",
+          fontSize: "1rem",
+        }}
+      >
+        Resultados Estimados em 4 Semanas
+      </p>
+      <svg width="100%" height="200" viewBox="0 0 300 160">
+        <line x1="40" y1="10" x2="40" y2="140" stroke="#ccc" strokeWidth="1" />
+        <line x1="40" y1="140" x2="280" y2="140" stroke="#ccc" strokeWidth="1" />
+
+        <path
+          d="M40,130 C80,120 120,100 160,80 C200,60 240,35 280,20 L280,140 L40,140 Z"
+          fill="rgba(240,195,142,0.3)"
+        />
+        <path
+          ref={goldPathRef}
+          d="M 40,130 C 80,120 120,100 160,80 C 200,60 240,35 280,20"
+          fill="none"
+          stroke="#d89f55"
+          strokeWidth="3"
+        />
+        <circle cx="40" cy="130" r="5" fill="#d89f55" />
+        <circle cx="120" cy="100" r="5" fill="#d89f55" />
+        <circle cx="200" cy="60" r="5" fill="#d89f55" />
+        <circle cx="280" cy="20" r="5" fill="#d89f55" />
+
+        <path
+          ref={purplePathRef}
+          d="M 40,130 C 80,128 120,126 160,124 C 200,122 240,120 280,118"
+          fill="none"
+          stroke="#7c6bd4"
+          strokeWidth="2"
+          strokeDasharray="4 2"
+        />
+        <circle cx="40" cy="130" r="4" fill="#7c6bd4" />
+        <circle cx="120" cy="126" r="4" fill="#7c6bd4" />
+        <circle cx="200" cy="122" r="4" fill="#7c6bd4" />
+        <circle cx="280" cy="118" r="4" fill="#7c6bd4" />
+
+        <text x="40" y="155" textAnchor="middle" fontSize="10" fill="#6c757d">
+          S1
+        </text>
+        <text x="120" y="155" textAnchor="middle" fontSize="10" fill="#6c757d">
+          S2
+        </text>
+        <text x="200" y="155" textAnchor="middle" fontSize="10" fill="#6c757d">
+          S3
+        </text>
+        <text x="280" y="155" textAnchor="middle" fontSize="10" fill="#6c757d">
+          S4
+        </text>
+      </svg>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "1rem",
+          fontSize: "0.85rem",
+          color: "#6c757d",
+          marginTop: "0.5rem",
+        }}
+      >
+        <span>
+          <span style={{ color: "#d89f55" }}>●</span> Botox Coreano Manual
+        </span>
+        <span>
+          <span style={{ color: "#7c6bd4" }}>●</span> Outras Soluções
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function LoadingStep({ onComplete }: { onComplete: () => void }) {
+  const [bars, setBars] = useState([0, 0, 0]);
+  const [imgIndex, setImgIndex] = useState(0);
+  const images = ["ba1.1.png", "ba2.2.png", "ba3.3.png", "ba4.4.png"];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setImgIndex((prev) => (prev + 1) % 4);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const duration = 2500;
+    const fps = 60;
+    const step = 100 / (duration / (1000 / fps));
+    let bar = 0;
+    let vals = [0, 0, 0];
+
+    const interval = setInterval(() => {
+      vals[bar] = Math.min(100, vals[bar] + step);
+      setBars([...vals]);
+      if (vals[bar] >= 100) {
+        bar++;
+        if (bar >= 3) {
+          clearInterval(interval);
+          setTimeout(onComplete, 500);
+        }
+      }
+    }, 1000 / fps);
+    return () => clearInterval(interval);
+  }, [onComplete]);
+
+  const labels = [
+    { icon: "🔄", text: "Analisando sua pele..." },
+    { icon: "⏳", text: "Revisando seus cuidados..." },
+    { icon: "✨", text: "Gerando plano final..." },
+  ];
+
+  return (
+    <>
+      <div
+        style={{
+          width: 56,
+          height: 56,
+          border: "4px solid rgba(216,159,85,0.2)",
+          borderTop: "4px solid #d89f55",
+          borderRadius: "50%",
+          margin: "0 auto 1.5rem",
+          animation: "spin 1s linear infinite",
+        }}
+      />
+
+      <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
+
+      <p
+        style={{
+          fontSize: "1.4rem",
+          fontWeight: 700,
+          textAlign: "center",
+          color: "#1a1a1a",
+          marginBottom: "1.5rem",
+        }}
+      >
+        Criando seu plano personalizado...
+      </p>
+
+      <div
+        style={{
+          position: "relative",
+          maxWidth: 420,
+          margin: "0 auto 2rem",
+          borderRadius: 16,
+          overflow: "hidden",
+          aspectRatio: "1448/1086",
+        }}
+      >
+        {images.map((img, i) => (
+          <img
+            key={img}
+            src={`${BASE_URL}${img}`}
+            alt={`Before After ${i + 1}`}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              opacity: imgIndex === i ? 1 : 0,
+              transition: "opacity 0.6s ease",
+            }}
+          />
+        ))}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            background: GOLD_GRADIENT,
+            color: "#1a1a1a",
+            fontWeight: 700,
+            letterSpacing: 1,
+            padding: "0.6rem",
+            textAlign: "center",
+            fontSize: "0.85rem",
+          }}
+        >
+          ANTES → DEPOIS
+        </div>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        {labels.map((item, i) => (
+          <div key={i}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "0.4rem",
+                fontSize: "0.9rem",
+              }}
+            >
+              <span>
+                {item.icon} {item.text}
+              </span>
+              <span style={{ fontWeight: 600 }}>{Math.round(bars[i])}%</span>
+            </div>
+            <div
+              style={{
+                height: 6,
+                borderRadius: 3,
+                background: "#e9ecef",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  height: "100%",
+                  width: `${bars[i]}%`,
+                  background: GOLD_GRADIENT,
+                  borderRadius: 3,
+                  transition: "width 0.05s linear",
+                }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+export default function QuizPage() {
+  const [step, setStep] = useState(0);
+  const [idade, setIdade] = useState("");
+  const [tipoPele, setTipoPele] = useState("");
+  const [objetivo, setObjetivo] = useState("");
+  const [area, setArea] = useState("");
+  const [tempoDia, setTempoDia] = useState("");
+  const [rotina, setRotina] = useState("");
+
+  const goBack = () => setStep((s) => Math.max(0, s - 1));
+  const progressPercent = step >= 1 && step <= 8 ? (step / 8) * 100 : 0;
+
+  const headerStyle: React.CSSProperties = {
+    position: "relative",
+    paddingTop: step >= 1 ? "0.5rem" : 0,
+    marginBottom: "1rem",
+  };
+
+  return (
+    <div
+      style={{
+        maxWidth: 560,
+        margin: "0 auto",
+        padding: "1.5rem",
+        background: "#ffffff",
+        minHeight: "100vh",
+        fontFamily: "Inter, sans-serif",
+        color: "#1a1a1a",
+      }}
+    >
+      {/* STEP 0: INTRO */}
+      {step === 0 && (
+        <div>
+          <Logo height={80} />
+          <div style={{ marginTop: "1rem" }}>
+            <ProgressBar percent={100} />
+          </div>
+          <h1
+            style={{
+              fontSize: "2rem",
+              fontWeight: 800,
+              textAlign: "center",
+              lineHeight: 1.2,
+              marginBottom: "0.5rem",
+            }}
+          >
+            Rejuvenesça até 20 anos em 28 dias com o
+          </h1>
+          <p
+            style={{
+              textAlign: "center",
+              fontSize: "1.5rem",
+              fontWeight: 700,
+              background: GOLD_GRADIENT,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              marginBottom: "1.5rem",
+            }}
+          >
+            BOTOX COREANO MANUAL
+          </p>
+          <img
+            src={`${BASE_URL}imagedesu.png`}
+            alt="Antes e Depois"
+            style={{
+              borderRadius: 16,
+              maxWidth: "100%",
+              display: "block",
+              marginBottom: "2rem",
+            }}
+          />
+          <CTAButton
+            label="Começar Avaliação Gratuita →"
+            onClick={() => setStep(1)}
+          />
+        </div>
+      )}
+
+      {/* STEP 1: IDADE */}
+      {step === 1 && (
+        <div>
+          <div style={headerStyle}>
+            <BackButton onClick={goBack} />
+            <Logo />
+          </div>
+          <ProgressBar percent={progressPercent} />
+          <h2
+            style={{
+              fontSize: "1.6rem",
+              fontWeight: 800,
+              textAlign: "center",
+              textTransform: "uppercase",
+              marginBottom: "0.5rem",
+            }}
+          >
+            SELECIONE SUA IDADE
+          </h2>
+          <p
+            style={{
+              fontSize: "0.95rem",
+              color: "#6c757d",
+              textAlign: "center",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Para personalizarmos o seu plano de resultados
+          </p>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "1rem",
+            }}
+          >
+            {[
+              { img: "velha_20.jpg", label: "20-29" },
+              { img: "velha_30.jpg", label: "30-39" },
+              { img: "velha_40.jpg", label: "40-49" },
+              { img: "velha_50.jpg", label: "50+" },
+            ].map((item) => (
+              <AgeCard
+                key={item.label}
+                img={item.img}
+                label={item.label}
+                selected={idade === item.label}
+                onClick={() => {
+                  setIdade(item.label);
+                  setStep(2);
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* STEP 2: TIPO DE PELE */}
+      {step === 2 && (
+        <div>
+          <div style={headerStyle}>
+            <BackButton onClick={goBack} />
+            <Logo />
+          </div>
+          <ProgressBar percent={progressPercent} />
+          <h2
+            style={{
+              fontSize: "1.6rem",
+              fontWeight: 700,
+              textAlign: "center",
+              marginBottom: "0.5rem",
+            }}
+          >
+            Como você descreveria sua pele?
+          </h2>
+          <p
+            style={{
+              fontSize: "0.95rem",
+              color: "#6c757d",
+              textAlign: "center",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Isso nos ajuda a ajustar o plano ideal para o seu tipo.
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            {[
+              { emoji: "😌", label: "Normal" },
+              { emoji: "😕", label: "Oleosa" },
+              { emoji: "😣", label: "Seca" },
+              { emoji: "🤗", label: "Mista" },
+            ].map((item) => (
+              <OptionBtn
+                key={item.label}
+                emoji={item.emoji}
+                label={item.label}
+                onClick={() => {
+                  setTipoPele(item.label);
+                  setStep(3);
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* STEP 3: OBJETIVO */}
+      {step === 3 && (
+        <div>
+          <div style={headerStyle}>
+            <BackButton onClick={goBack} />
+            <Logo />
+          </div>
+          <ProgressBar percent={progressPercent} />
+          <h2
+            style={{
+              fontSize: "1.6rem",
+              fontWeight: 700,
+              textAlign: "center",
+              marginBottom: "0.5rem",
+            }}
+          >
+            Qual é o seu principal objetivo?
+          </h2>
+          <p
+            style={{
+              fontSize: "0.95rem",
+              color: "#6c757d",
+              textAlign: "center",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Com o Botox Coreano Manual
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            {[
+              { emoji: "✨", label: "Me sentir mais jovem" },
+              { emoji: "💃🏻", label: "Voltar a me sentir bem e confiante" },
+              { emoji: "🔋", label: "Não parecer sempre cansada" },
+              { emoji: "💖", label: "Recuperar minha autoestima" },
+            ].map((item) => (
+              <OptionBtn
+                key={item.label}
+                emoji={item.emoji}
+                label={item.label}
+                onClick={() => {
+                  setObjetivo(item.label);
+                  setStep(4);
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* STEP 4: AREA DO ROSTO */}
+      {step === 4 && (
+        <div>
+          <div style={headerStyle}>
+            <BackButton onClick={goBack} />
+            <Logo />
+          </div>
+          <ProgressBar percent={progressPercent} />
+          <h2
+            style={{
+              fontSize: "1.6rem",
+              fontWeight: 700,
+              textAlign: "center",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Qual área você quer melhorar primeiro?
+          </h2>
+          <div style={{ display: "flex", gap: "1rem" }}>
+            <div style={{ flex: 1 }}>
+              <img
+                src={`${BASE_URL}leticia_52.jpg`}
+                alt="Letícia"
+                style={{
+                  borderRadius: 16,
+                  width: "100%",
+                  maxHeight: 320,
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              />
+            </div>
+            <div
+              style={{
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.5rem",
+                justifyContent: "center",
+              }}
+            >
+              {["Todo o rosto", "Testa", "Olhos", "Bochechas", "Pescoço"].map(
+                (label) => (
+                  <OptionBtn
+                    key={label}
+                    label={label}
+                    compact
+                    onClick={() => {
+                      setArea(label);
+                      setStep(5);
+                    }}
+                  />
+                )
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 5: BEFORE/AFTER SLIDER */}
+      {step === 5 && (
+        <div>
+          <div style={headerStyle}>
+            <BackButton onClick={goBack} />
+            <Logo />
+          </div>
+          <ProgressBar percent={progressPercent} />
+          <h2
+            style={{
+              fontSize: "1.6rem",
+              fontWeight: 700,
+              textAlign: "center",
+              marginBottom: "0.5rem",
+              background: GOLD_GRADIENT,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            Uma pele firme e jovem ficou mais fácil
+          </h2>
+          <p
+            style={{
+              fontSize: "0.95rem",
+              color: "#6c757d",
+              textAlign: "center",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Arraste para o lado para ver o resultado incrível da Letícia
+          </p>
+
+          <BeforeAfterSlider />
+
+          <div style={{ marginTop: "1.5rem", marginBottom: "1.5rem" }}>
+            <TestimonialCard
+              name="Letícia, 52 anos"
+              verified={false}
+              stars={5}
+              text="Foram só 3 semanas fazendo o botox coreano manual e minha pele ficou completamente diferente. As linhas de expressão suavizaram e meu rosto parece muito mais firme e jovem!"
+            />
+          </div>
+
+          <CTAButton label="Continuar" onClick={() => setStep(6)} />
+        </div>
+      )}
+
+      {/* STEP 6: TEMPO POR DIA */}
+      {step === 6 && (
+        <div>
+          <div style={headerStyle}>
+            <BackButton onClick={goBack} />
+            <Logo />
+          </div>
+          <ProgressBar percent={progressPercent} />
+          <h2
+            style={{
+              fontSize: "1.6rem",
+              fontWeight: 700,
+              textAlign: "center",
+              marginBottom: "0.5rem",
+            }}
+          >
+            Quanto tempo por dia você pode dedicar?
+          </h2>
+          <p
+            style={{
+              fontSize: "0.95rem",
+              color: "#6c757d",
+              textAlign: "center",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Seu plano será ajustado para caber na sua rotina
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            {[
+              { emoji: "🕐", label: "Menos de 5 minutos" },
+              { emoji: "⏰", label: "De 5 à 15 minutos" },
+              { emoji: "🕰️", label: "Mais de 15 minutos" },
+            ].map((item) => (
+              <OptionBtn
+                key={item.label}
+                emoji={item.emoji}
+                label={item.label}
+                onClick={() => {
+                  setTempoDia(item.label);
+                  setStep(7);
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* STEP 7: ROTINA */}
+      {step === 7 && (
+        <div>
+          <div style={headerStyle}>
+            <BackButton onClick={goBack} />
+            <Logo />
+          </div>
+          <ProgressBar percent={progressPercent} />
+          <h2
+            style={{
+              fontSize: "1.6rem",
+              fontWeight: 700,
+              textAlign: "center",
+              marginBottom: "0.5rem",
+            }}
+          >
+            Você já tem uma rotina de cuidados com a pele?
+          </h2>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.75rem",
+              marginTop: "1.5rem",
+            }}
+          >
+            {[
+              { emoji: "🤗", label: "Sim, cuido todos os dias" },
+              { emoji: "😬", label: "Maioria dos dias, mas as vezes esqueço" },
+              { emoji: "😩", label: "Cuido as vezes ou quando lembro" },
+              { emoji: "😕", label: "Nunca sigo uma rotina" },
+            ].map((item) => (
+              <OptionBtn
+                key={item.label}
+                emoji={item.emoji}
+                label={item.label}
+                onClick={() => {
+                  setRotina(item.label);
+                  setStep(8);
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* STEP 8: GRAFICO */}
+      {step === 8 && (
+        <div>
+          <div style={headerStyle}>
+            <BackButton onClick={goBack} />
+            <Logo />
+          </div>
+          <ProgressBar percent={progressPercent} />
+          <h2
+            style={{
+              fontSize: "1.6rem",
+              fontWeight: 700,
+              textAlign: "center",
+              marginBottom: "0.5rem",
+              background: GOLD_GRADIENT,
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            O único programa que você precisa
+          </h2>
+          <p
+            style={{
+              fontSize: "0.95rem",
+              color: "#6c757d",
+              textAlign: "center",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Para combater sinais de idade e recuperar a confiança. Em poucos
+            dias, sua pele mais firme e iluminada!
+          </p>
+
+          <AnimatedChart />
+
+          <div style={{ marginTop: "2rem" }}>
+            <CTAButton label="Próxima Etapa" onClick={() => setStep(9)} />
+          </div>
+        </div>
+      )}
+
+      {/* STEP 9: LOADING */}
+      {step === 9 && (
+        <div>
+          <div style={headerStyle}>
+            <BackButton onClick={goBack} />
+            <Logo />
+          </div>
+          <ProgressBar percent={90} />
+          <LoadingStep onComplete={() => setStep(10)} />
+        </div>
+      )}
+
+      {/* STEP 10: RESULTADO */}
+      {step === 10 && (
+        <div>
+          <div style={{ ...headerStyle, position: "relative" }}>
+            <BackButton onClick={goBack} />
+            <Logo />
+          </div>
+
+          <img
+            src={`${BASE_URL}foto_9.png`}
+            alt="Resultado da avaliação"
+            style={{
+              maxWidth: 420,
+              width: "100%",
+              borderRadius: 16,
+              display: "block",
+              margin: "0 auto 1.5rem",
+            }}
+          />
+
+          <h2
+            style={{
+              fontSize: "1.5rem",
+              fontWeight: 700,
+              textAlign: "center",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Resultado da sua avaliação
+          </h2>
+
+          {/* Nível de envelhecimento */}
+          <div
+            style={{
+              border: "1px solid rgba(235,87,87,0.4)",
+              borderRadius: 16,
+              padding: "1.25rem",
+              marginBottom: "1rem",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "0.75rem",
+              }}
+            >
+              <span style={{ fontSize: "0.9rem", color: "#6c757d" }}>
+                Nível de envelhecimento:
+              </span>
+              <span style={{ color: "#eb5757", fontWeight: 600, fontSize: "0.9rem" }}>
+                🚨 Zona de alerta
+              </span>
+            </div>
+            <div
+              style={{
+                position: "relative",
+                height: 10,
+                borderRadius: 5,
+                background:
+                  "linear-gradient(to right, #27ae60, #f5a623, #e67e22, #eb5757)",
+              }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  top: -3,
+                  left: "85%",
+                  transform: "translateX(-50%)",
+                  width: 14,
+                  height: 14,
+                  borderRadius: "50%",
+                  background: "#eb5757",
+                  border: "2px solid white",
+                  boxShadow: "0 2px 6px rgba(0,0,0,0.3)",
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Caixa de alerta */}
+          <div
+            style={{
+              background: "rgba(245,166,35,0.1)",
+              border: "1px solid rgba(245,166,35,0.4)",
+              borderRadius: 12,
+              padding: "1rem",
+              marginBottom: "1rem",
+              fontSize: "0.9rem",
+              lineHeight: 1.5,
+            }}
+          >
+            ⚠️ Atenção:{" "}
+            <strong>
+              Seu rosto está perdendo sustentação silenciosamente. Mesmo com
+              alguns cuidados, fatores diários estão enfraquecendo a musculatura
+              facial e aprofundando rugas.
+            </strong>
+          </div>
+
+          {/* Grid sinais / protocolo */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "0.75rem",
+              marginBottom: "1.5rem",
+            }}
+          >
+            <div
+              style={{
+                background: "rgba(235,87,87,0.15)",
+                border: "1px solid rgba(235,87,87,0.4)",
+                borderRadius: 14,
+                padding: "1rem",
+              }}
+            >
+              <p
+                style={{
+                  color: "#eb5757",
+                  fontWeight: 700,
+                  fontSize: "0.9rem",
+                  marginTop: 0,
+                  marginBottom: "0.5rem",
+                }}
+              >
+                ⚠️ Principais Sinais:
+              </p>
+              {[
+                "Flacidez progressiva",
+                "Queda nas bochechas",
+                "Olhar cansado",
+                "Testa marcada",
+              ].map((t) => (
+                <p
+                  key={t}
+                  style={{
+                    fontSize: "0.9rem",
+                    margin: "0.3rem 0",
+                    color: "#1a1a1a",
+                  }}
+                >
+                  ❌ {t}
+                </p>
+              ))}
+            </div>
+            <div
+              style={{
+                background: "rgba(39,174,96,0.15)",
+                border: "1px solid rgba(39,174,96,0.4)",
+                borderRadius: 14,
+                padding: "1rem",
+              }}
+            >
+              <p
+                style={{
+                  color: "#27ae60",
+                  fontWeight: 700,
+                  fontSize: "0.9rem",
+                  marginTop: 0,
+                  marginBottom: "0.5rem",
+                }}
+              >
+                ✨ O Protocolo Irá:
+              </p>
+              {[
+                "Reativar colágeno",
+                "Fortalecer musculatura",
+                "Melhorar firmeza",
+                "Rejuvenescer a pele",
+              ].map((t) => (
+                <p
+                  key={t}
+                  style={{
+                    fontSize: "0.9rem",
+                    margin: "0.3rem 0",
+                    color: "#1a1a1a",
+                  }}
+                >
+                  ✅ {t}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          <CTAButton
+            label="Desbloquear meu protocolo"
+            onClick={() => setStep(11)}
+          />
+
+          {/* Depoimentos */}
+          <div style={{ marginTop: "2rem" }}>
+            <p
+              style={{
+                fontSize: "0.85rem",
+                color: "#6c757d",
+                marginBottom: "1rem",
+              }}
+            >
+              Ao vivo de quem já usa o protocolo:
+            </p>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.75rem",
+              }}
+            >
+              {testimonials.map((t) => (
+                <TestimonialCard key={t.name} {...t} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 11: VSL */}
+      {step === 11 && (
+        <div>
+          <div style={{ marginBottom: "1.5rem" }}>
+            <Logo />
+          </div>
+
+          <h2
+            style={{
+              fontSize: "1.4rem",
+              fontWeight: 800,
+              textAlign: "center",
+              marginBottom: "0.5rem",
+              lineHeight: 1.3,
+            }}
+          >
+            Seu plano personalizado do Botox Coreano Manual está pronto! 🎉
+          </h2>
+          <p
+            style={{
+              fontSize: "0.95rem",
+              color: "#6c757d",
+              textAlign: "center",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Seu plano personalizado será liberado ao final do vídeo 👇🏼
+          </p>
+
+          <div
+            style={{
+              background: "#1a1a1a",
+              borderRadius: 12,
+              aspectRatio: "16/9",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+              cursor: "pointer",
+            }}
+          >
+            <span
+              style={{ fontSize: "4rem", opacity: 0.8, color: "white" }}
+            >
+              ▶
+            </span>
+            <span
+              style={{
+                position: "absolute",
+                bottom: 16,
+                color: "rgba(255,255,255,0.7)",
+                fontSize: "0.9rem",
+                textAlign: "center",
+                width: "100%",
+              }}
+            >
+              🎬 O Vídeo Começa Aqui
+            </span>
+          </div>
+          <p
+            style={{
+              fontSize: "0.85rem",
+              color: "#6c757d",
+              textAlign: "center",
+              marginTop: "0.75rem",
+            }}
+          >
+            Descubra o segredo do rejuvenescimento coreano em 5 minutos diários.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AgeCard({
+  img,
+  label,
+  selected,
+  onClick,
+}: {
+  img: string;
+  label: string;
+  selected: boolean;
+  onClick: () => void;
+}) {
+  const [hover, setHover] = useState(false);
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        borderRadius: 16,
+        background:
+          selected
+            ? "rgba(240,195,142,0.2)"
+            : hover
+            ? "rgba(240,195,142,0.1)"
+            : "rgba(0,0,0,0.03)",
+        border: selected
+          ? "2px solid #d89f55"
+          : hover
+          ? "1px solid #d89f55"
+          : "1px solid rgba(0,0,0,0.08)",
+        padding: "1.5rem 1rem",
+        textAlign: "center",
+        cursor: "pointer",
+        transition: "all 0.2s ease",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <img
+        src={`${BASE_URL}${img}`}
+        alt={label}
+        style={{
+          borderRadius: "50%",
+          width: 90,
+          height: 90,
+          objectFit: "cover",
+        }}
+      />
+      <span
+        style={{
+          fontSize: "1rem",
+          fontWeight: 600,
+          marginTop: "0.75rem",
+          color: "#1a1a1a",
+        }}
+      >
+        {label}
+      </span>
+    </button>
+  );
+}
