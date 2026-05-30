@@ -1159,7 +1159,7 @@ function VSLStep({ step }: { step: number }) {
       {exibirBotao && (
         <div style={{ marginTop: "2.5rem", textAlign: "center", animation: "fadeSlideIn 0.8s ease-out forwards" }}>
           <a 
-            href="SUA_URL_DE_CHECKOUT_AQUI" 
+            href="https://pay.onprofit.com.br/H7vX2qCb?off=iDtnE2" 
             style={{ display: "inline-block", background: "#28a745", color: "white", padding: "1.2rem 2rem", borderRadius: "50px", fontSize: "1.2rem", fontWeight: "bold", textDecoration: "none", boxShadow: "0 4px 15px rgba(40, 167, 69, 0.4)", transition: "transform 0.2s ease", cursor: "pointer", border: "none", width: "100%", maxWidth: "350px" }}
             onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
             onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
