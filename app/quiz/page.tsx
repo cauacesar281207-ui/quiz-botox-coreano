@@ -1121,54 +1121,56 @@ function ResultStep({
 }
 
 function VSLStep({ step }: { step: number }) {
+  const [exibirBotao, setExibirBotao] = useState(false);
+
   useEffect(() => {
     if (step !== 11) return;
+
+    // 1. Carrega o script do Player
     const s = document.createElement("script");
-    s.src =
-      "https://scripts.converteai.net/9e5423e3-0f94-43d6-8352-206772c5af81/players/6a173bf2be176651058cebdf/v4/player.js";
+    s.src = "https://scripts.converteai.net/9e5423e3-0f94-43d6-8352-206772c5af81/players/6a173bf2be176651058cebdf/v4/player.js";
     s.async = true;
-    document.head.appendChild(s);
+    document.head.appendChild(s );
+
+    // 2. Timer para mostrar o botão aos 3 minutos e 55 segundos (235 segundos)
+    const timer = setTimeout(() => {
+      setExibirBotao(true);
+    }, 235000); 
+
     return () => {
-      document.head.removeChild(s);
+      if (document.head.contains(s)) document.head.removeChild(s);
+      clearTimeout(timer);
     };
   }, [step]);
 
   return (
-    <div>
-      <h2
-        style={{
-          fontSize: "1.4rem",
-          fontWeight: 800,
-          textAlign: "center",
-          marginBottom: "0.5rem",
-          lineHeight: 1.3,
-          color: "#d89f55",
-        }}
-      >
+    <div style={{ paddingBottom: "4rem" }}>
+      <h2 style={{ fontSize: "1.4rem", fontWeight: 800, textAlign: "center", marginBottom: "0.5rem", lineHeight: 1.3, color: "#d89f55" }}>
         Seu plano personalizado do Botox Coreano Manual está pronto! 🎉
       </h2>
-      <p
-        style={{
-          fontSize: "0.95rem",
-          color: "#6c757d",
-          textAlign: "center",
-          marginBottom: "1.5rem",
-        }}
-      >
+      <p style={{ fontSize: "0.95rem", color: "#6c757d", textAlign: "center", marginBottom: "1.5rem" }}>
         Seu plano personalizado será liberado ao final do vídeo 👇🏼
       </p>
 
-      <div style={{ width: "100%", maxWidth: 400, margin: "0 auto" }}>
-        <vturb-smartplayer
-          id="vid-6a173bf2be176651058cebdf"
-          style={{
-            display: "block",
-            margin: "0 auto",
-            width: "100%",
-            maxWidth: 400,
-          }}
-        />
+      <div style={{ width: "100%", maxWidth: 400, margin: "0 auto", borderRadius: 16, overflow: "hidden", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}>
+        <vturb-smartplayer id="vid-6a173bf2be176651058cebdf" style={{ display: "block", margin: "0 auto", width: "100%", maxWidth: 400 }} />
       </div>
+
+      {exibirBotao && (
+        <div style={{ marginTop: "2.5rem", textAlign: "center", animation: "fadeSlideIn 0.8s ease-out forwards" }}>
+          <a 
+            href="SUA_URL_DE_CHECKOUT_AQUI" 
+            style={{ display: "inline-block", background: "#28a745", color: "white", padding: "1.2rem 2rem", borderRadius: "50px", fontSize: "1.2rem", fontWeight: "bold", textDecoration: "none", boxShadow: "0 4px 15px rgba(40, 167, 69, 0.4)", transition: "transform 0.2s ease", cursor: "pointer", border: "none", width: "100%", maxWidth: "350px" }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
+            ✅ QUERO MEU PLANO AGORA!
+            <div style={{ fontSize: "0.8rem", fontWeight: "normal", marginTop: "4px" }}>
+              (Acesso imediato e 30 dias de garantia)
+            </div>
+          </a>
+        </div>
+      )}
     </div>
   );
 }
