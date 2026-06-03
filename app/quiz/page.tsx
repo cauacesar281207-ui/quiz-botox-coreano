@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { track } from "../../lib/track";
 
 const BASE_URL = "https://thenaturalprotocol.online/Botox-Coreano/assets/";
 const GOLD_GRADIENT = "linear-gradient(135deg, #f0c38e, #d89f55, #f5d7b0)";
@@ -1158,8 +1159,9 @@ function VSLStep({ step }: { step: number }) {
 
       {exibirBotao && (
         <div style={{ marginTop: "2.5rem", textAlign: "center", animation: "fadeSlideIn 0.8s ease-out forwards" }}>
-          <a 
-            href="https://pay.onprofit.com.br/H7vX2qCb?off=iDtnE2" 
+          <a
+            href="https://pay.onprofit.com.br/H7vX2qCb?off=iDtnE2"
+            onClick={() => track({ clicked_cta: true })}
             style={{ display: "inline-block", background: "#28a745", color: "white", padding: "1.2rem 2rem", borderRadius: "50px", fontSize: "1.2rem", fontWeight: "bold", textDecoration: "none", boxShadow: "0 4px 15px rgba(40, 167, 69, 0.4)", transition: "transform 0.2s ease", cursor: "pointer", border: "none", width: "100%", maxWidth: "350px" }}
             onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
             onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
@@ -1183,6 +1185,11 @@ export default function QuizPage() {
   const [area, setArea] = useState("");
   const [tempoDia, setTempoDia] = useState("");
   const [rotina, setRotina] = useState("");
+
+  // Tracking: grava avanço de step. completed quando chega no VSL (11).
+  useEffect(() => {
+    track({ step_reached: step, ...(step >= 11 ? { completed: true } : {}) });
+  }, [step]);
 
   const goBack = () => setStep((s) => Math.max(0, s - 1));
   const progressPercent = step >= 1 && step <= 8 ? (step / 8) * 100 : 0;
@@ -1318,6 +1325,7 @@ export default function QuizPage() {
                   selected={idade === item.label}
                   onClick={() => {
                     setIdade(item.label);
+                    track({ answers: { resp_idade: item.label } });
                     setStep(2);
                   }}
                 />
@@ -1367,6 +1375,7 @@ export default function QuizPage() {
                   label={item.label}
                   onClick={() => {
                     setTipoPele(item.label);
+                    track({ answers: { resp_pele: item.label } });
                     setStep(3);
                   }}
                 />
@@ -1416,6 +1425,7 @@ export default function QuizPage() {
                   label={item.label}
                   onClick={() => {
                     setObjetivo(item.label);
+                    track({ answers: { resp_objetivo: item.label } });
                     setStep(4);
                   }}
                 />
@@ -1474,6 +1484,7 @@ export default function QuizPage() {
                       compact
                       onClick={() => {
                         setArea(label);
+                        track({ answers: { resp_area: label } });
                         setStep(5);
                       }}
                     />
@@ -1571,6 +1582,7 @@ export default function QuizPage() {
                   label={item.label}
                   onClick={() => {
                     setTempoDia(item.label);
+                    track({ answers: { resp_tempo: item.label } });
                     setStep(7);
                   }}
                 />
@@ -1617,6 +1629,7 @@ export default function QuizPage() {
                   label={item.label}
                   onClick={() => {
                     setRotina(item.label);
+                    track({ answers: { resp_rotina: item.label } });
                     setStep(8);
                   }}
                 />
