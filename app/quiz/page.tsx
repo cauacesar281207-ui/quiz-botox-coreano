@@ -1161,9 +1161,17 @@ function VSLStep({ step }: { step: number }) {
         <div style={{ marginTop: "2.5rem", textAlign: "center", animation: "fadeSlideIn 0.8s ease-out forwards" }}>
           <button
             onClick={() => {
-              const url = "https://pay.onprofit.com.br/H7vX2qCb?off=iDtnE2";
+              const base = "https://pay.onprofit.com.br/H7vX2qCb?off=iDtnE2";
+              // Repassa os UTMs que vieram na URL do quiz pro checkout (atribuicao).
+              const qs = typeof window !== "undefined" ? window.location.search : "";
+              const params = new URLSearchParams(qs);
+              const utms = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"];
+              const extra = utms
+                .map(k => params.get(k) ? `${k}=${encodeURIComponent(params.get(k)!)}` : null)
+                .filter(Boolean)
+                .join("&");
+              const url = extra ? `${base}&${extra}` : base;
               track({ clicked_cta: true });
-              // Da 60ms pro pixel da Utmify processar antes de navegar.
               setTimeout(() => { window.location.href = url; }, 60);
             }}
             style={{ display: "inline-block", background: "#28a745", color: "white", padding: "1.2rem 2rem", borderRadius: "50px", fontSize: "1.2rem", fontWeight: "bold", textDecoration: "none", boxShadow: "0 4px 15px rgba(40, 167, 69, 0.4)", transition: "transform 0.2s ease", cursor: "pointer", border: "none", width: "100%", maxWidth: "350px" }}
