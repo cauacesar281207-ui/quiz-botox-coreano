@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { track } from "../../lib/track";
+import { useExitGuard } from "../../lib/useExitGuard";
 
 const BASE_URL = "https://thenaturalprotocol.online/Botox-Coreano/assets/";
 const GOLD_GRADIENT = "linear-gradient(135deg, #f0c38e, #d89f55, #f5d7b0)";
@@ -1203,6 +1204,13 @@ export default function QuizPage() {
     track({ step_reached: step, ...(step >= 11 ? { completed: true } : {}) });
   }, [step]);
 
+  // Motor de saida (Etapa 1): popup global + back-redirect
+  const { popupOpen, closeExitPopup } = useExitGuard({
+    isVSL: step === 11,
+    onGoToVSL: () => setStep(11),
+    tslPath: '/tsl', // pagina TSL chega na Etapa 4 (ate la, 404 e esperado)
+  });
+
   const goBack = () => setStep((s) => Math.max(0, s - 1));
   const progressPercent = step >= 1 && step <= 8 ? (step / 8) * 100 : 0;
 
@@ -1711,6 +1719,19 @@ export default function QuizPage() {
         {/* STEP 11: VSL */}
         {step === 11 && <VSLStep step={step} />}
       </div>
+
+      {popupOpen && (
+        <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:9999, padding:'1.5rem' }}>
+          <div style={{ background:'#fff', borderRadius:16, padding:'2rem', maxWidth:380, textAlign:'center' }}>
+            <p style={{ fontSize:'1.2rem', fontWeight:700, marginTop:0, color:'#1a1a1a' }}>Calma, não saia ainda!</p>
+            <p style={{ color:'#6c757d', marginBottom:'1rem' }}>Continue até o final e veja o conteúdo de graça.</p>
+            <button onClick={closeExitPopup} style={{ background:GOLD_GRADIENT, color:'#1a1a1a', border:'none', borderRadius:50, padding:'0.9rem 1.5rem', fontWeight:700, cursor:'pointer', width:'100%' }}>
+              Continuar
+            </button>
+            <p style={{ fontSize:'0.7rem', color:'#bbb', marginTop:'0.75rem', marginBottom:0 }}>[placeholder Etapa 1 — design vem na Etapa 2]</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
