@@ -1248,6 +1248,14 @@ export default function QuizPage() {
           from { opacity: 0; transform: scale(0.95); box-shadow: 0 0 0px rgba(235,87,87,0); }
           to { opacity: 1; transform: scale(1); box-shadow: 0 0 30px rgba(235,87,87,0.2); }
         }
+        @keyframes popIn {
+          from { opacity: 0; transform: scale(0.85) translateY(20px); }
+          to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes ctaPulse {
+          0%, 100% { transform: scale(1); box-shadow: 0 6px 22px rgba(216,159,85,0.45); }
+          50% { transform: scale(1.03); box-shadow: 0 8px 30px rgba(216,159,85,0.6); }
+        }
       `}</style>
 
       <div key={step} style={{ animation: "fadeSlideIn 0.35s ease-out" }}>
@@ -1721,14 +1729,74 @@ export default function QuizPage() {
       </div>
 
       {popupOpen && (
-        <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:9999, padding:'1.5rem' }}>
-          <div style={{ background:'#fff', borderRadius:16, padding:'2rem', maxWidth:380, textAlign:'center' }}>
-            <p style={{ fontSize:'1.2rem', fontWeight:700, marginTop:0, color:'#1a1a1a' }}>Calma, não saia ainda!</p>
-            <p style={{ color:'#6c757d', marginBottom:'1rem' }}>Continue até o final e veja o conteúdo de graça.</p>
-            <button onClick={closeExitPopup} style={{ background:GOLD_GRADIENT, color:'#1a1a1a', border:'none', borderRadius:50, padding:'0.9rem 1.5rem', fontWeight:700, cursor:'pointer', width:'100%' }}>
-              Continuar
+        <div
+          onClick={closeExitPopup}
+          style={{
+            position: "fixed", inset: 0, zIndex: 9999,
+            background: "rgba(20,12,4,0.72)", backdropFilter: "blur(4px)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            padding: "1.5rem", animation: "fadeSlideIn 0.25s ease-out",
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: "relative", background: "#fffaf3",
+              borderRadius: 24, padding: "2.5rem 1.75rem 2rem",
+              maxWidth: 380, width: "100%", textAlign: "center",
+              border: "1px solid rgba(216,159,85,0.35)",
+              boxShadow: "0 0 60px rgba(216,159,85,0.35), 0 20px 60px rgba(0,0,0,0.4)",
+              animation: "popIn 0.35s cubic-bezier(0.34,1.56,0.64,1) both",
+            }}
+          >
+            {/* selo topo */}
+            <div
+              style={{
+                position: "absolute", top: -18, left: "50%",
+                transform: "translateX(-50%)", background: GOLD_GRADIENT,
+                color: "#1a1a1a", fontWeight: 800, fontSize: "0.7rem",
+                letterSpacing: 1, padding: "0.4rem 1.1rem", borderRadius: 50,
+                whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(216,159,85,0.45)",
+              }}
+            >
+              ⚠️ ESPERE!
+            </div>
+
+            <div style={{ fontSize: "2.75rem", marginBottom: "0.5rem", marginTop: "0.5rem" }}>
+              🎁
+            </div>
+
+            <h2
+              style={{
+                fontSize: "1.6rem", fontWeight: 800, lineHeight: 1.2,
+                margin: "0 0 0.75rem", color: "#1a1a1a",
+              }}
+            >
+              Calma, não saia ainda!
+            </h2>
+
+            <p
+              style={{
+                fontSize: "1rem", color: "#6c5a45", lineHeight: 1.5,
+                margin: "0 0 1.75rem",
+              }}
+            >
+              Você está a poucos passos de ver seu plano completo.
+              <strong style={{ color: "#1a1a1a" }}> Continue até o final e veja o conteúdo de graça.</strong>
+            </p>
+
+            <button
+              onClick={closeExitPopup}
+              style={{
+                background: GOLD_GRADIENT, color: "#1a1a1a",
+                fontWeight: 800, fontSize: "1.1rem", border: "none",
+                borderRadius: 50, padding: "1.1rem 2rem", width: "100%",
+                cursor: "pointer", boxShadow: "0 6px 22px rgba(216,159,85,0.45)",
+                animation: "ctaPulse 1.8s ease-in-out infinite",
+              }}
+            >
+              QUERO CONTINUAR →
             </button>
-            <p style={{ fontSize:'0.7rem', color:'#bbb', marginTop:'0.75rem', marginBottom:0 }}>[placeholder Etapa 1 — design vem na Etapa 2]</p>
           </div>
         </div>
       )}
