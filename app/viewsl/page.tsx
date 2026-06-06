@@ -29,14 +29,15 @@ export default function ViewSL() {
 
   return (
     <main className="min-h-screen bg-white flex flex-col items-center px-4 py-10 text-center">
-      {/* barra de progresso cravada em 93% */}
+      {/* barra de progresso cravada em 93% — gradiente vermelho */}
       <div className="w-full max-w-2xl mb-8">
         <div className="w-full h-7 rounded-full bg-gray-200 overflow-hidden">
           <div
-            className="h-full bg-green-500 flex items-center justify-end pr-3 rounded-full transition-all"
-            style={{ width: '93%' }}
+            className="h-full flex items-center justify-between px-3 rounded-full transition-all"
+            style={{ width: '93%', background: 'linear-gradient(to right, #dc2626, #f87171)' }}
           >
             <span className="text-white text-xs md:text-sm font-bold whitespace-nowrap">Última etapa</span>
+            <span className="text-white text-xs md:text-sm font-bold whitespace-nowrap">93%</span>
           </div>
         </div>
       </div>
