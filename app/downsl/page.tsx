@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 import { createPageTracker, appendUtms } from '../../lib/trackPage'
 
 // !!! BLOQUEIO: Batman ainda não enviou o checkout do R$47. Sem isso o botão não navega. !!!
-const DOWNSELL_CHECKOUT_URL = 'COLE_AQUI_O_LINK_DO_CHECKOUT_R47'
+const DOWNSELL_CHECKOUT_URL = 'https://pay.onprofit.com.br/MynKmlM7?off=9IOrMs'
 
 export default function DownSL() {
   const tracker = useRef(createPageTracker('botox-downsell')).current
