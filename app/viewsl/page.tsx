@@ -29,6 +29,18 @@ export default function ViewSL() {
 
   return (
     <main className="min-h-screen bg-white flex flex-col items-center px-4 py-10 text-center">
+      {/* barra de progresso cravada em 93% */}
+      <div className="w-full max-w-2xl mb-8">
+        <div className="w-full h-7 rounded-full bg-gray-200 overflow-hidden">
+          <div
+            className="h-full bg-green-500 flex items-center justify-end pr-3 rounded-full transition-all"
+            style={{ width: '93%' }}
+          >
+            <span className="text-white text-xs md:text-sm font-bold whitespace-nowrap">Última etapa</span>
+          </div>
+        </div>
+      </div>
+
       <div className="w-full max-w-2xl">
         <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800 leading-tight">
           ESPERE, ESPERE… <span className="font-normal text-gray-700">AINDA FALTA UM PASSO</span>
