@@ -1759,7 +1759,7 @@ export default function QuizPage() {
                 whiteSpace: "nowrap", boxShadow: "0 4px 14px rgba(216,159,85,0.45)",
               }}
             >
-              ⚠️ ESPERE!
+              ⚠️ ¡ESPERA!
             </div>
 
             <div style={{ fontSize: "2.75rem", marginBottom: "0.5rem", marginTop: "0.5rem" }}>
@@ -1772,7 +1772,7 @@ export default function QuizPage() {
                 margin: "0 0 0.75rem", color: "#1a1a1a",
               }}
             >
-              Calma, não saia ainda!
+              Tranquila, ¡no te vayas todavía!
             </h2>
 
             <p
@@ -1781,8 +1781,8 @@ export default function QuizPage() {
                 margin: "0 0 1.75rem",
               }}
             >
-              Você está a poucos passos de ver seu plano completo.
-              <strong style={{ color: "#1a1a1a" }}> Continue até o final e veja o conteúdo de graça.</strong>
+              Estás a pocos pasos de ver tu plan completo.
+              <strong style={{ color: "#1a1a1a" }}> Sigue hasta el final y mira el contenido gratis.</strong>
             </p>
 
             <button
@@ -1795,7 +1795,7 @@ export default function QuizPage() {
                 animation: "ctaPulse 1.8s ease-in-out infinite",
               }}
             >
-              QUERO CONTINUAR →
+              QUIERO CONTINUAR →
             </button>
           </div>
         </div>
