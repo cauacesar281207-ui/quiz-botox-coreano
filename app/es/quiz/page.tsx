@@ -1145,9 +1145,9 @@ function VSLStep({ step }: { step: number }) {
             onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
             onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
           >
-            ✅ QUERO MEU PLANO AGORA!
+            ✅ ¡QUIERO MI PLAN AHORA!
             <div style={{ fontSize: "0.8rem", fontWeight: "normal", marginTop: "4px" }}>
-              (Acesso imediato e 30 dias de garantia)
+              (Acceso inmediato y 30 días de garantía)
             </div>
           </button>
         </div>
@@ -1668,7 +1668,7 @@ export default function QuizPage() {
             <AnimatedChart />
 
             <div style={{ marginTop: "2rem" }}>
-              <CTAButton label="Próxima Etapa" onClick={() => setStep(9)} />
+              <CTAButton label="Siguiente Paso" onClick={() => setStep(9)} />
             </div>
           </div>
         )}
