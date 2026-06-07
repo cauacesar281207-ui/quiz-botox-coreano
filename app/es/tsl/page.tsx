@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 const GOLD_GRADIENT = "linear-gradient(135deg, #f0c38e, #d89f55, #f5d7b0)";
-const CHECKOUT_BASE = "https://pay.onprofit.com.br/H7vX2qCb?off=iDtnE2";
+const CHECKOUT_BASE = "https://pay.hotmart.com/Q106185334Q?off=h1k33ai8";
 
 function buildCheckoutUrl(): string {
   if (typeof window === "undefined") return CHECKOUT_BASE;

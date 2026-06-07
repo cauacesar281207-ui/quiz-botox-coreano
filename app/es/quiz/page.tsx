@@ -1162,7 +1162,7 @@ function VSLStep({ step }: { step: number }) {
         <div style={{ marginTop: "2.5rem", textAlign: "center", animation: "fadeSlideIn 0.8s ease-out forwards" }}>
           <button
             onClick={() => {
-              const base = "https://pay.onprofit.com.br/H7vX2qCb?off=iDtnE2";
+              const base = "https://pay.hotmart.com/Q106185334Q?off=u9cxyj5c&checkoutMode=10";
               // Repassa os UTMs que vieram na URL do quiz pro checkout (atribuicao).
               const qs = typeof window !== "undefined" ? window.location.search : "";
               const params = new URLSearchParams(qs);
