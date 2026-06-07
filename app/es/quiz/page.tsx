@@ -1470,7 +1470,7 @@ export default function QuizPage() {
                   justifyContent: "center",
                 }}
               >
-                {["Todo o rosto", "Testa", "Olhos", "Bochechas", "Pescoço"].map(
+                {["Todo el rostro", "Frente", "Ojos", "Mejillas", "Cuello"].map(
                   (label) => (
                     <OptionBtn
                       key={label}
@@ -1508,7 +1508,7 @@ export default function QuizPage() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Uma pele firme e jovem ficou mais fácil
+              Una piel firme y joven ahora es más fácil
             </h2>
             <p
               style={{
@@ -1518,17 +1518,17 @@ export default function QuizPage() {
                 marginBottom: "1.5rem",
               }}
             >
-              Arraste para o lado para ver o resultado incrível da Letícia
+              Desliza hacia el lado para ver el increíble resultado de Leticia
             </p>
 
             <BeforeAfterSlider />
 
             <div style={{ marginTop: "1.5rem", marginBottom: "1.5rem" }}>
               <TestimonialCard
-                name="Letícia, 52 anos"
+                name="Leticia, 52 años"
                 verified={false}
                 stars={5}
-                text="Foram só 3 semanas fazendo o botox coreano manual e minha pele ficou completamente diferente. As linhas de expressão suavizaram e meu rosto parece muito mais firme e jovem!"
+                text="¡Fueron solo 3 semanas haciendo el bótox coreano manual y mi piel quedó completamente diferente. Las líneas de expresión se suavizaron y mi rostro se ve mucho más firme y joven!"
               />
             </div>
 
@@ -1552,7 +1552,7 @@ export default function QuizPage() {
                 marginBottom: "0.5rem",
               }}
             >
-              Quanto tempo por dia você pode dedicar?
+              ¿Cuánto tiempo al día puedes dedicar?
             </h2>
             <p
               style={{
@@ -1562,13 +1562,13 @@ export default function QuizPage() {
                 marginBottom: "1.5rem",
               }}
             >
-              Seu plano será ajustado para caber na sua rotina
+              Tu plan se ajustará para caber en tu rutina
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               {[
                 { emoji: "🕐", label: "Menos de 5 minutos" },
-                { emoji: "⏰", label: "De 5 à 15 minutos" },
-                { emoji: "🕰️", label: "Mais de 15 minutos" },
+                { emoji: "⏰", label: "De 5 a 15 minutos" },
+                { emoji: "🕰️", label: "Más de 15 minutos" },
               ].map((item) => (
                 <OptionBtn
                   key={item.label}
@@ -1601,7 +1601,7 @@ export default function QuizPage() {
                 marginBottom: "0.5rem",
               }}
             >
-              Você já tem uma rotina de cuidados com a pele?
+              ¿Ya tienes una rutina de cuidado de la piel?
             </h2>
             <div
               style={{
@@ -1612,10 +1612,10 @@ export default function QuizPage() {
               }}
             >
               {[
-                { emoji: "🤗", label: "Sim, cuido todos os dias" },
-                { emoji: "😬", label: "Maioria dos dias, mas as vezes esqueço" },
-                { emoji: "😩", label: "Cuido as vezes ou quando lembro" },
-                { emoji: "😕", label: "Nunca sigo uma rotina" },
+                { emoji: "🤗", label: "Sí, me cuido todos los días" },
+                { emoji: "😬", label: "Casi todos los días, pero a veces lo olvido" },
+                { emoji: "😩", label: "Me cuido a veces o cuando me acuerdo" },
+                { emoji: "😕", label: "Nunca sigo una rutina" },
               ].map((item) => (
                 <OptionBtn
                   key={item.label}
@@ -1651,7 +1651,7 @@ export default function QuizPage() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              O único programa que você precisa
+              El único programa que necesitas
             </h2>
             <p
               style={{
@@ -1661,8 +1661,8 @@ export default function QuizPage() {
                 marginBottom: "1.5rem",
               }}
             >
-              Para combater sinais de idade e recuperar a confiança. Em poucos
-              dias, sua pele mais firme e iluminada!
+              Para combatir los signos de la edad y recuperar la confianza. ¡En pocos
+              días, tu piel más firme y luminosa!
             </p>
 
             <AnimatedChart />
