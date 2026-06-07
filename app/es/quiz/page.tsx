@@ -1287,7 +1287,7 @@ export default function QuizPage() {
                 marginBottom: "0.5rem",
               }}
             >
-              SELECIONE SUA IDADE
+              SELECCIONA TU EDAD
             </h2>
             <p
               style={{
@@ -1297,7 +1297,7 @@ export default function QuizPage() {
                 marginBottom: "1.5rem",
               }}
             >
-              Para personalizarmos o seu plano de resultados
+              Para personalizar tu plan de resultados
             </p>
             <div
               style={{
@@ -1344,7 +1344,7 @@ export default function QuizPage() {
                 marginBottom: "0.5rem",
               }}
             >
-              Como você descreveria sua pele?
+              ¿Cómo describirías tu piel?
             </h2>
             <p
               style={{
@@ -1354,14 +1354,14 @@ export default function QuizPage() {
                 marginBottom: "1.5rem",
               }}
             >
-              Isso nos ajuda a ajustar o plano ideal para o seu tipo.
+              Esto nos ayuda a ajustar el plan ideal para tu tipo.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               {[
                 { emoji: "😌", label: "Normal" },
-                { emoji: "😕", label: "Oleosa" },
+                { emoji: "😕", label: "Grasa" },
                 { emoji: "😣", label: "Seca" },
-                { emoji: "🤗", label: "Mista" },
+                { emoji: "🤗", label: "Mixta" },
               ].map((item) => (
                 <OptionBtn
                   key={item.label}
@@ -1394,7 +1394,7 @@ export default function QuizPage() {
                 marginBottom: "0.5rem",
               }}
             >
-              Qual é o seu principal objetivo?
+              ¿Cuál es tu principal objetivo?
             </h2>
             <p
               style={{
@@ -1404,14 +1404,14 @@ export default function QuizPage() {
                 marginBottom: "1.5rem",
               }}
             >
-              Com o Botox Coreano Manual
+              Con el Bótox Coreano Manual
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               {[
-                { emoji: "✨", label: "Me sentir mais jovem" },
-                { emoji: "💃🏻", label: "Voltar a me sentir bem e confiante" },
-                { emoji: "🔋", label: "Não parecer sempre cansada" },
-                { emoji: "💖", label: "Recuperar minha autoestima" },
+                { emoji: "✨", label: "Sentirme más joven" },
+                { emoji: "💃🏻", label: "Volver a sentirme bien y segura" },
+                { emoji: "🔋", label: "No parecer siempre cansada" },
+                { emoji: "💖", label: "Recuperar mi autoestima" },
               ].map((item) => (
                 <OptionBtn
                   key={item.label}
@@ -1444,13 +1444,13 @@ export default function QuizPage() {
                 marginBottom: "1.5rem",
               }}
             >
-              Qual área você quer melhorar primeiro?
+              ¿Qué zona quieres mejorar primero?
             </h2>
             <div style={{ display: "flex", gap: "1rem" }}>
               <div style={{ flex: 1, position: "relative", display: "inline-block" }}>
                 <img
                   src={`${BASE_URL}leticia_52.jpg`}
-                  alt="Letícia"
+                  alt="Leticia"
                   style={{
                     borderRadius: 16,
                     width: "100%",
