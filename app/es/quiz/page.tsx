@@ -19,51 +19,17 @@ declare module "react" {
 }
 
 const testimonials = [
-  {
-    name: "Fátima, 52 anos",
-    verified: false,
-    stars: 5,
-    text: '"Eu não acreditava que algo tão simples pudesse mudar tanto minha pele. Em 2 semanas, meu rosto já estava mais firme e iluminado. Me sinto 10 anos mais jovem!"',
-  },
-  {
-    name: "Sônia, 58 anos",
-    verified: true,
-    stars: 5,
-    text: '"Minhas amigas não param de perguntar o que eu fiz. O botox coreano manual devolveu a firmeza que eu achava que tinha perdido pra sempre."',
-  },
-  {
-    name: "Márcia, 48 anos",
-    verified: false,
-    stars: 5,
-    text: '"Sempre tive medo de procedimentos invasivos. Esse método é natural, fácil e os resultados são reais. Minha autoestima voltou!"',
-  },
-  {
-    name: "Silvana, 55 anos",
-    verified: false,
-    stars: 5,
-    text: '"Dedico apenas 5 minutinhos por dia e já noto diferença enorme nas linhas de expressão. Recomendo de olhos fechados!"',
-  },
-  {
-    name: "Renata, 42 anos",
-    verified: false,
-    stars: 5,
-    text: '"Comecei por curiosidade e agora não largo mais. Minha pele está mais firme e com muito mais vida. Melhor investimento que fiz!"',
-  },
+  { name: "Carmen, 52 años", verified: false, stars: 5, text: '"No creía que algo tan simple pudiera cambiar tanto mi piel. En 2 semanas, mi rostro ya estaba más firme y luminoso. ¡Me siento 10 años más joven!"' },
+  { name: "Rosa, 58 años", verified: true, stars: 5, text: '"Mis amigas no paran de preguntarme qué me hice. El bótox coreano manual me devolvió la firmeza que creía perdida para siempre."' },
+  { name: "Lucía, 48 años", verified: false, stars: 5, text: '"Siempre les tuve miedo a los procedimientos invasivos. Este método es natural, fácil y los resultados son reales. ¡Recuperé mi autoestima!"' },
+  { name: "Patricia, 55 años", verified: false, stars: 5, text: '"Le dedico apenas 5 minutos al día y ya noto una diferencia enorme en las líneas de expresión. ¡Lo recomiendo con los ojos cerrados!"' },
+  { name: "Verónica, 42 años", verified: false, stars: 5, text: '"Empecé por curiosidad y ahora no lo dejo más. Mi piel está más firme y con mucha más vida. ¡La mejor inversión que hice!"' },
 ];
 
 const introTestimonials = [
-  {
-    name: "Mariana, 45 anos",
-    text: '"As massagens são relaxantes e o resultado na firmeza é incrível! Parece que rejuvenesci 10 anos."',
-  },
-  {
-    name: "Fernanda, 38 anos",
-    text: '"Nunca pensei que algo tão simples pudesse fazer tanta diferença. Minha pele está completamente transformada!"',
-  },
-  {
-    name: "Claudia, 52 anos",
-    text: '"Depois de 3 semanas, meu marido perguntou o que eu tinha feito diferente. Recomendo muito!"',
-  },
+  { name: "Mariana, 45 años", text: '"Los masajes son relajantes y el resultado en la firmeza es increíble. ¡Parece que rejuvenecí 10 años!"' },
+  { name: "Fernanda, 38 años", text: '"Nunca pensé que algo tan simple pudiera hacer tanta diferencia. ¡Mi piel está completamente transformada!"' },
+  { name: "Claudia, 52 años", text: '"Después de 3 semanas, mi marido me preguntó qué había hecho diferente. ¡Lo recomiendo muchísimo!"' },
 ];
 
 function Stars({ count }: { count: number }) {
