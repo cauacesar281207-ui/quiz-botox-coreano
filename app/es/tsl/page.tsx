@@ -66,34 +66,34 @@ export default function TSLPage() {
           letterSpacing: 2, fontSize: "0.8rem", textTransform: "uppercase",
           marginBottom: "1.5rem",
         }}>
-          Espere — leia isto antes de ir embora
+          Espera — lee esto antes de irte
         </p>
 
         <h1 className="tsl-reveal" style={{
           fontSize: "2rem", fontWeight: 800, lineHeight: 1.25,
           textAlign: "center", marginBottom: "2rem", color: "#fff",
         }}>
-          Você estava prestes a fechar a única coisa que ainda pode devolver a firmeza do seu rosto — <span style={{ color: "#f0c38e" }}>sem agulha, sem clínica, sem gastar uma fortuna.</span>
+          Estabas a punto de cerrar lo único que todavía puede devolverle la firmeza a tu rostro — <span style={{ color: "#f0c38e" }}>sin agujas, sin clínica, sin gastar una fortuna.</span>
         </h1>
 
         <div className="tsl-reveal" style={{ fontSize: "1.08rem", lineHeight: 1.75, color: "#d8cdbd" }}>
           <p style={{ marginTop: 0 }}>
-            Eu entendo. Você já tentou cremes caríssimos que prometiam o mundo e entregaram nada. Já olhou no espelho de manhã e não reconheceu o rosto cansado que olhava de volta. Já pensou em procedimentos — mas a ideia de uma agulha no seu rosto, o preço absurdo e o medo de ficar com cara artificial te fizeram recuar.
+            Lo entiendo. Ya probaste cremas carísimas que prometían el mundo y no entregaron nada. Ya te miraste al espejo en la mañana y no reconociste el rostro cansado que te devolvía la mirada. Ya pensaste en procedimientos — pero la idea de una aguja en tu cara, el precio absurdo y el miedo a quedar con cara artificial te hicieron retroceder.
           </p>
           <p>
-            Por isso o <strong style={{ color: "#f0c38e" }}>Botox Coreano Manual</strong> existe. É a técnica que mulheres coreanas usam há gerações para manter a pele firme até os 60, 70 anos — usando apenas as próprias mãos, alguns minutos por dia. Sem toxina. Sem dor. Sem depender de ninguém.
+            Por eso existe el <strong style={{ color: "#f0c38e" }}>Bótox Coreano Manual</strong>. Es la técnica que las mujeres coreanas usan desde hace generaciones para mantener la piel firme hasta los 60, los 70 años — usando solo sus propias manos, unos minutos al día. Sin toxinas. Sin dolor. Sin depender de nadie.
           </p>
           <p>
-            As fibras que sustentam o seu rosto não morreram. Elas estão <strong style={{ color: "#fff" }}>adormecidas</strong>. E os movimentos certos, feitos na sequência certa, reativam a circulação e o colágeno que dão sustentação à pele — exatamente onde a flacidez aparece primeiro.
+            Las fibras que sostienen tu rostro no murieron. Están <strong style={{ color: "#fff" }}>dormidas</strong>. Y los movimientos correctos, hechos en la secuencia correcta, reactivan la circulación y el colágeno que le dan sostén a la piel — justo donde la flacidez aparece primero.
           </p>
           <p>
-            Mulheres que começaram essa semana já relatam o rosto mais "levantado" em 14 dias. Não é mágica. É método. O mesmo que você acabou de ver no seu plano personalizado.
+            Las mujeres que empezaron esta semana ya cuentan que sienten el rostro más "levantado" en 14 días. No es magia. Es método. El mismo que acabas de ver en tu plan personalizado.
           </p>
           <p style={{ color: "#fff", fontWeight: 600 }}>
-            Mas essa página não vai ficar aberta para sempre. Se você sair agora, vai voltar a empurrar com a barriga — e daqui a seis meses estará exatamente onde está hoje, só que com seis meses a mais marcados no rosto.
+            Pero esta página no va a quedar abierta para siempre. Si te vas ahora, vas a volver a dejarlo para después — y dentro de seis meses vas a estar exactamente donde estás hoy, solo que con seis meses más marcados en el rostro.
           </p>
           <p style={{ fontSize: "1.2rem", color: "#f0c38e", fontWeight: 700, textAlign: "center", margin: "2rem 0 0.5rem" }}>
-            A decisão de parar de envelhecer no piloto automático é sua. E é agora.
+            La decisión de dejar de envejecer en piloto automático es tuya. Y es ahora.
           </p>
         </div>
 
@@ -101,9 +101,9 @@ export default function TSLPage() {
           display: "flex", flexDirection: "column", alignItems: "center",
           gap: "0.75rem", marginTop: "2.5rem",
         }}>
-          <CTA label="✅ QUERO MEU PROTOCOLO AGORA" />
+          <CTA label="✅ QUIERO MI PROTOCOLO AHORA" />
           <p style={{ fontSize: "0.8rem", color: "#8a7d6b", margin: 0 }}>
-            Acesso imediato · 30 dias de garantia incondicional
+            Acceso inmediato · 30 días de garantía incondicional
           </p>
         </div>
 
