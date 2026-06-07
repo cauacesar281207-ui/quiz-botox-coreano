@@ -616,9 +616,9 @@ function LoadingStep({ onComplete }: { onComplete: () => void }) {
   }, [onComplete]);
 
   const labels = [
-    { icon: "🔄", text: "Analisando sua pele..." },
-    { icon: "⏳", text: "Revisando seus cuidados..." },
-    { icon: "✨", text: "Gerando plano final..." },
+    { icon: "🔄", text: "Analizando tu piel..." },
+    { icon: "⏳", text: "Revisando tus cuidados..." },
+    { icon: "✨", text: "Generando plan final..." },
   ];
 
   return (
@@ -644,7 +644,7 @@ function LoadingStep({ onComplete }: { onComplete: () => void }) {
           marginBottom: "1.5rem",
         }}
       >
-        Criando seu plano personalizado...
+        Creando tu plan personalizado...
       </p>
 
       <div
@@ -689,7 +689,7 @@ function LoadingStep({ onComplete }: { onComplete: () => void }) {
             fontSize: "0.85rem",
           }}
         >
-          ANTES → DEPOIS
+          ANTES → DESPUÉS
         </div>
       </div>
 
@@ -793,7 +793,7 @@ function IntroLoading({ onComplete }: { onComplete: () => void }) {
           marginBottom: "1.5rem",
         }}
       >
-        Carregando a avaliação...
+        Cargando la evaluación...
       </p>
 
       <div style={{ position: "relative", minHeight: 120 }}>
@@ -897,7 +897,7 @@ function ResultStep({
       <div style={{ animation: "fadeSlideIn 0.35s ease-out 0s both" }}>
         <img
           src={`${BASE_URL}foto_9.png`}
-          alt="Resultado da avaliação"
+          alt="Resultado de la evaluación"
           style={{
             maxWidth: 420,
             width: "100%",
