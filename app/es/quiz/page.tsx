@@ -497,7 +497,7 @@ function AnimatedChart() {
           fontSize: "1rem",
         }}
       >
-        Resultados Estimados em 4 Semanas
+        Resultados Estimados en 4 Semanas
       </p>
       <svg width="100%" height="200" viewBox="0 0 300 160">
         <line x1="40" y1="10" x2="40" y2="140" stroke="#ccc" strokeWidth="1" />
@@ -572,10 +572,10 @@ function AnimatedChart() {
         }}
       >
         <span>
-          <span style={{ color: "#d89f55" }}>●</span> Botox Coreano Manual
+          <span style={{ color: "#d89f55" }}>●</span> Bótox Coreano Manual
         </span>
         <span>
-          <span style={{ color: "#7c6bd4" }}>●</span> Outras Soluções
+          <span style={{ color: "#7c6bd4" }}>●</span> Otras Soluciones
         </span>
       </div>
     </div>
@@ -940,7 +940,7 @@ function ResultStep({
           }}
         >
           <span style={{ fontSize: "0.9rem", color: "#6c757d" }}>
-            Nível de envelhecimento:
+            Nivel de envejecimiento:
           </span>
           <span style={{ color: "#eb5757", fontWeight: 600, fontSize: "0.9rem" }}>
             🚨 Zona de alerta
@@ -985,11 +985,11 @@ function ResultStep({
           animation: "fadeSlideIn 0.35s ease-out 0.5s both",
         }}
       >
-        ⚠️ Atenção:{" "}
+        ⚠️ Atención:{" "}
         <strong>
-          Seu rosto está perdendo sustentação silenciosamente. Mesmo com alguns
-          cuidados, fatores diários estão enfraquecendo a musculatura facial e
-          aprofundando rugas.
+          Tu rostro está perdiendo sostén silenciosamente. Incluso con algunos
+          cuidados, factores diarios están debilitando la musculatura facial y
+          profundizando las arrugas.
         </strong>
       </div>
 
@@ -1019,9 +1019,9 @@ function ResultStep({
               marginBottom: "0.5rem",
             }}
           >
-            ⚠️ Principais Sinais:
+            ⚠️ Principales Señales:
           </p>
-          {["Flacidez progressiva", "Queda nas bochechas", "Olhar cansado", "Testa marcada"].map(
+          {["Flacidez progresiva", "Caída en las mejillas", "Mirada cansada", "Frente marcada"].map(
             (t) => (
               <p key={t} style={{ fontSize: "0.9rem", margin: "0.3rem 0", color: "#1a1a1a" }}>
                 ❌ {t}
@@ -1046,9 +1046,9 @@ function ResultStep({
               marginBottom: "0.5rem",
             }}
           >
-            ✨ O Protocolo Irá:
+            ✨ El Protocolo Va a:
           </p>
-          {["Reativar colágeno", "Fortalecer musculatura", "Melhorar firmeza", "Rejuvenescer a pele"].map(
+          {["Reactivar el colágeno", "Fortalecer la musculatura", "Mejorar la firmeza", "Rejuvenecer la piel"].map(
             (t) => (
               <p key={t} style={{ fontSize: "0.9rem", margin: "0.3rem 0", color: "#1a1a1a" }}>
                 ✅ {t}
@@ -1059,7 +1059,7 @@ function ResultStep({
       </div>
 
       <div style={{ animation: "fadeSlideIn 0.35s ease-out 1s both" }}>
-        <CTAButton label="Desbloquear meu protocolo" onClick={onUnlock} />
+        <CTAButton label="Desbloquear mi protocolo" onClick={onUnlock} />
       </div>
 
       <div style={{ marginTop: "2rem", animation: "fadeSlideIn 0.35s ease-out 1.2s both" }}>
@@ -1070,7 +1070,7 @@ function ResultStep({
             marginBottom: "1rem",
           }}
         >
-          Ao vivo de quem já usa o protocolo:
+          En vivo de quienes ya usan el protocolo:
         </p>
         <div
           style={{
@@ -1114,10 +1114,10 @@ function VSLStep({ step }: { step: number }) {
   return (
     <div style={{ paddingBottom: "4rem" }}>
       <h2 style={{ fontSize: "1.4rem", fontWeight: 800, textAlign: "center", marginBottom: "0.5rem", lineHeight: 1.3, color: "#d89f55" }}>
-        Seu plano personalizado do Botox Coreano Manual está pronto! 🎉
+        ¡Tu plan personalizado del Bótox Coreano Manual está listo! 🎉
       </h2>
       <p style={{ fontSize: "0.95rem", color: "#6c757d", textAlign: "center", marginBottom: "1.5rem" }}>
-        Seu plano personalizado será liberado ao final do vídeo 👇🏼
+        Tu plan personalizado se liberará al final del video 👇🏼
       </p>
 
       <div style={{ width: "100%", maxWidth: 400, margin: "0 auto", borderRadius: 16, overflow: "hidden", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}>
