@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPageTracker, appendUtms } from '../../lib/trackPage'
 
-const REVEAL_DELAY_MS = 1000 // TODO: setar quando vier o timing do pitch
+const REVEAL_DELAY_MS = 190000 // 3:10 — botões revelam no minuto do pitch
 const CHECKOUT_URL = 'https://pay.onprofit.com.br/MynKmlM7?off=eDqB9J'
 
 export default function ViewSL() {
@@ -11,11 +11,22 @@ export default function ViewSL() {
 
   useEffect(() => {
     tracker.track({ step_reached: 0 })
+
+    // carrega player VTurb
+    const player = document.createElement('script')
+    player.src = 'https://scripts.converteai.net/9e5423e3-0f94-43d6-8352-206772c5af81/players/6a25fd77a278bc0f2459ec47/v4/player.js'
+    player.async = true
+    document.head.appendChild(player)
+
     const t = setTimeout(() => {
       setShow(true)
       tracker.track({ step_reached: 1 })
     }, REVEAL_DELAY_MS)
-    return () => clearTimeout(t)
+
+    return () => {
+      clearTimeout(t)
+      if (document.head.contains(player)) document.head.removeChild(player)
+    }
   }, [tracker])
 
   const goQuero = () => {
@@ -51,9 +62,11 @@ export default function ViewSL() {
           <span className="font-bold text-gray-700">Somente nesta página</span> 👇
         </p>
 
-        <div className="mt-8 w-full aspect-video bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
-          {/* COLE AQUI O EMBED DO VÍDEO (VTurb/YouTube) quando o Batman enviar */}
-          <span className="text-gray-400 text-sm">[ embed do vídeo aqui ]</span>
+        <div className="mt-8 w-full max-w-[400px] mx-auto rounded-lg overflow-hidden shadow-lg">
+          <vturb-smartplayer
+            id="vid-6a25fd77a278bc0f2459ec47"
+            style={{ display: 'block', margin: '0 auto', width: '100%', maxWidth: 400 }}
+          />
         </div>
 
         {show && (
