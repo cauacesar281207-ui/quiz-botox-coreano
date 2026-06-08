@@ -1241,7 +1241,7 @@ export default function QuizPage() {
                 marginBottom: "0.5rem",
               }}
             >
-              Rejuvenesça até 20 anos em 28 dias com o
+              Rejuvenece hasta 20 años en 28 días con el
             </h1>
             <p
               style={{
@@ -1254,11 +1254,11 @@ export default function QuizPage() {
                 marginBottom: "1.5rem",
               }}
             >
-              BOTOX COREANO MANUAL
+              BÓTOX COREANO MANUAL
             </p>
             <img
               src={`${BASE_URL}imagedesu.png`}
-              alt="Antes e Depois"
+              alt="Antes y Después"
               style={{
                 borderRadius: 16,
                 maxWidth: "100%",
