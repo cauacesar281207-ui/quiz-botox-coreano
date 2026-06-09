@@ -1096,7 +1096,7 @@ function VSLStep({ step }: { step: number }) {
 
     // 1. Carrega o script do Player
     const s = document.createElement("script");
-    s.src = "https://scripts.converteai.net/9e5423e3-0f94-43d6-8352-206772c5af81/players/6a173bf2be176651058cebdf/v4/player.js";
+    s.src = "https://scripts.converteai.net/9e5423e3-0f94-43d6-8352-206772c5af81/players/6a284e6de2a106677994e67d/v4/player.js";
     s.async = true;
     document.head.appendChild(s );
 
@@ -1121,7 +1121,7 @@ function VSLStep({ step }: { step: number }) {
       </p>
 
       <div style={{ width: "100%", maxWidth: 400, margin: "0 auto", borderRadius: 16, overflow: "hidden", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}>
-        <vturb-smartplayer id="vid-6a173bf2be176651058cebdf" style={{ display: "block", margin: "0 auto", width: "100%", maxWidth: 400 }} />
+        <vturb-smartplayer id="vid-6a284e6de2a106677994e67d" style={{ display: "block", margin: "0 auto", width: "100%", maxWidth: 400 }} />
       </div>
 
       {exibirBotao && (
